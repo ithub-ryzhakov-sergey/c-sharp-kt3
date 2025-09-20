@@ -32,7 +32,7 @@ public static int ParseStringToInt(string input)
 Цель: создать и использовать собственное исключение.
 
 Необходимо:
-- Создать `InvalidPasswordException` (три стандартных конструктора).
+- Создать `InvalidPasswordException`.
 - Реализовать метод:
 ```csharp
 public static void ValidatePassword(string password)
