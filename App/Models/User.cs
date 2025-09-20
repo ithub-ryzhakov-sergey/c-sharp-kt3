@@ -1,11 +1,28 @@
-namespace App.Models;
+using System;
 
-public class User
+namespace App.Models
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
-    public string Email { get; set; } = string.Empty;
-}
+    public class User
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
+        public User(string firstName, string lastName, string email, DateTime dateOfBirth)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+        }
+
+        public int GetAge(DateTime referenceDate)
+        {
+            int age = referenceDate.Year - DateOfBirth.Year;
+            if (referenceDate < DateOfBirth.AddYears(age))
+                age--;
+            return age;
+        }
+    }
+}
