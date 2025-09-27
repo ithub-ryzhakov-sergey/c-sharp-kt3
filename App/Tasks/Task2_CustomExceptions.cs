@@ -2,50 +2,47 @@ using System;
 
 namespace App.Tasks
 {
-    // Создаем собственное исключение
     public class InvalidPasswordException : Exception
     {
-        // Три стандартных конструктора
-        public InvalidPasswordException() : base() { }
+        public InvalidPasswordException() : base("Пароль не соответствует требованиям безопасности")
+        {
+        }
 
-        public InvalidPasswordException(string message) : base(message) { }
-
-        public InvalidPasswordException(string message, Exception innerException)
-            : base(message, innerException) { }
+        public InvalidPasswordException(string message) : base(message)
+        {
+        }
     }
 
     public static class PasswordValidator
     {
         public static void ValidatePassword(string password)
         {
-            // Проверка на null
             if (password == null)
             {
-                throw new InvalidPasswordException("Password cannot be null");
+                throw new InvalidPasswordException("Пароль не может быть null");
             }
 
-            // Проверка длины
             if (password.Length < 8)
             {
-                throw new InvalidPasswordException("Password must be at least 8 characters long");
+                throw new InvalidPasswordException("Длина пароля должна быть не менее 8 символов");
             }
 
-            // Проверка наличия цифры
-            bool hasDigit = false;
+            if (!ContainsDigit(password))
+            {
+                throw new InvalidPasswordException("Пароль должен содержать хотя бы одну цифру");
+            }
+        }
+
+        private static bool ContainsDigit(string password)
+        {
             foreach (char c in password)
             {
                 if (char.IsDigit(c))
                 {
-                    hasDigit = true;
-                    break;
+                    return true;
                 }
             }
-
-            if (!hasDigit)
-            {
-                throw new InvalidPasswordException("Password must contain at least one digit");
-            }
+            return false;
         }
     }
 }
-
