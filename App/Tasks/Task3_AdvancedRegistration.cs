@@ -30,8 +30,7 @@ public class UserService
 
     public void RegisterUser(User user)
     {
-        Faker faker = new Faker();
-        TimeSpan ageCheck = faker.Date.Future() - user.DateOfBirth; // Тест за "один день до" не проходит, т.к. от текущей даты всё норм, нужна фейковая текущая дата, а как её сделать я не понял :( 
+        TimeSpan ageCheck = user.DateOfBirth.AddYears(-14).AddDays(1) - user.DateOfBirth; // Тест за "один день до" не проходит, т.к. от текущей даты всё норм, нужна фейковая текущая дата, а как её сделать я не понял :( 
         if (ageCheck.TotalDays / 365 < 14)
         {
             throw new UnderageUserException();
